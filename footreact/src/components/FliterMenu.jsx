@@ -1,14 +1,22 @@
-
-import { BsCartPlus } from "react-icons/bs";
 import { useState } from 'react'
 import {data} from '../data/data.js'
 
-function FliterMenu() {
-  const [foodmenu, setFootmenu]=useState(data);
+import {BsCartPlus} from 'react-icons/bs'
+function FilterMenu() {
+  const [foodmenu, setFoodmenu]=useState(data);
+  const [productType ,setProductType] =useState([
+    "burger",
+    "pizza",
+    "salad",
+  'chicken'
+  ]);
+
+  const price = [2,3,4,5];
+
 
   // Filter Type 
-  const fliterType =(category)=> {
-    setFootmenu(data.filter((item ) => {
+  const filterType =(category)=> {
+    setFoodmenu(data.filter((item ) => {
         return item.category === category 
       }
     )
@@ -16,8 +24,8 @@ function FliterMenu() {
   };
 
   // Filter Price 
-  const fliterPrice = (price)=> {
-    setFootmenu(
+  const filterPrice = (price)=> {
+    setFoodmenu(
       data.filter((item) => {
         return item.price === price
       })
@@ -30,23 +38,25 @@ function FliterMenu() {
         <div className='flex  flex-col md:flex-row  justify-between items-center ' >
           <div className='flex flex-col '>
             <h3 className='text-[19px] font-medium  text-gray-600 p-3'>Filter Type</h3>
-            <div >
-              <button  onClick={ ()=> setFootmenu(data)}   className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>All</button>
-              <button  onClick={()=> {fliterType('burger')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>Burgers</button>
-              <button onClick={()=> {fliterType('pizza')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>Pizza</button>
-              <button onClick={()=> {fliterType('salad')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>Salads</button>
-              <button onClick={()=> {fliterType( 'chicken')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>Chicken</button>
-            </div>
+              <div className=" flex">
+                  <div >
+                  <button  onClick={ ()=> setFoodmenu(data)}   className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>All</button>
+                  </div>
+                  {
+                    productType.map((protype) => (
+                    <div key={protype}> <button   onClick={()=> {filterType(protype)}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>{protype}</button></div> 
+                    ))
+                  }
+              </div>
           </div>
           {/*Filter Price */}
           <div>
           <h3 className='text-[19px] font-medium  text-gray-600 p-3'>Filter Price</h3>
-          <div>
-            <button  onClick={()=> { fliterPrice('$')}}  className= ' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>$</button>
-            <button  onClick={()=> { fliterPrice('$$')}} className= ' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>$$</button>
-            <button  onClick={()=> { fliterPrice('$$$')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>$$$</button>
-            <button  onClick={()=> { fliterPrice('$$$$')}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>$$$$</button>
-          </div>
+            {
+              price.map((price)=> (
+                <button key={price}  onClick={()=> { filterPrice(price)}} className=' mr-[12px] border-[#f97316] hover:bg-[#f97316] transition duration-300  hover:text-white  mb-2'>{price}$ </button>
+              ))
+            }
           </div>
         </div>
         {/* Fliter Menu */}
@@ -75,4 +85,4 @@ function FliterMenu() {
   )
 }
 
-export default FliterMenu
+export default FilterMenu
